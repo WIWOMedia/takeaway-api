@@ -34,7 +34,7 @@ class ProductsController extends Controller
                     'category' => $this->category(),
                     'price' => $this->price(),
                     'amount' => $this->amount(),
-                    'sub_roducts' => []
+                    'sub_products' => []
                 ];
 
             } else {
@@ -81,21 +81,21 @@ class ProductsController extends Controller
         return trim($this->_product_dom->eq(0)->text());
     }
 
-    public static function saveDB($products, $order_id, $customer_id){
-        foreach ($products as $product) {
-            $order = Products::firstOrNew(['order_id' => $order_id]);
-            $order->order_id = $order_id;
-            $order->customer_id = $customer_id;
+    public static function saveDB($order_info, $customer_id){
+        foreach ($order_info['products'] as $order) {
+            $product = new Products;
+            $product->order_id = $order_info['details']['order_id'];
+            $product->customer_id = $customer_id;
 
-            foreach ($product as $key => $value) {
-                if($products[$key] == 'sub_products'){
-                    $order->sub_products = json_encode($value);
+            foreach ($order as $key => $value) {
+                if($key == 'sub_products'){
+                    $product->sub_products = json_encode($value);
                 } else {
-                    $order->$key = $value;
+                    $product->$key = $value;
                 }
             }
 
-            $order->save();                
+            $product->save();                
         }
     }
 }

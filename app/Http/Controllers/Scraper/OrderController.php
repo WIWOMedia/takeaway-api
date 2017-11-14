@@ -100,32 +100,34 @@ class OrderController extends Controller
 	}	
 
 	private static function DB($order_info){
-		$customer = Customers::where('address', $order_info['customer']['address'])->get()->first();
+		$order_db = Orders::where('order_id', $order_info['details']['order_id'])->get()->first();
 
-		if (!$customer) {
-			$customer_id = Uuid::generate();
+		if(!$order_db){
+			$customer = Customers::where('address', $order_info['customer']['address'])->get()->first();
 
-			CustomersController::saveDB($customer_id, $order_info['customer']);	
-		} else {
-			$customer_id = $customer->customer_id; 
+			if (!$customer) {
+				$customer_id = Uuid::generate();
+
+				CustomersController::saveDB($customer_id, $order_info);	
+			} else {
+				$customer_id = $customer->customer_id; 
+			}
+
+			ProductsController::saveDB($order_info, $customer_id);
+			self::save($order_info, $customer_id);
 		}
-
-		ProductsController::saveDB($order_info['products'], $order_info['details']['order_id'], $customer_id);
-
-		return self::save($order_info, $customer_id);
 	}
 
 	private static function save($order_info, $customer_id){
 		$details = $order_info['details'];
 
-		$order = Orders::firstOrNew(['order_id' => $details['order_id']]);
+		$order = new Orders;
+		$order->customer_id = $customer_id;
 
-			$order->delivery_costs = $details['delivery_costs'];
-			$order->customer_id = $customer_id;
-			$order->total_price = $details['total_price'];
-			$order->payment_method = $details['payment_method'];
-			$order->order_placed = $details['order_placed'];
-			$order->delivery_costs = $details['delivery_costs'];
-			$order->save();
+		foreach ($order_info['details'] as $key => $value) {
+			$order->$key = $value;
+		}
+		
+		$order->save();	
 	}
 }

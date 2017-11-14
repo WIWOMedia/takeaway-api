@@ -24,11 +24,11 @@ class CustomersController extends Controller
         return $this->_customer_info;
     }
 
-    public static function saveDB($customer_id, $info){
+    public static function saveDB($customer_id, $order_info){
         $customer = new Customers;
         $customer->customer_id = $customer_id;
 
-        foreach ($info as $key => $value) {
+        foreach ($order_info['customer'] as $key => $value) {
             $customer->$key = $value;
         }
 
