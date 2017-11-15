@@ -5,14 +5,14 @@
 > This code is in no way affiliated with, authorized, maintained, sponsored or endorsed by takeaway.com/thuisbezorgd.nl or any of its affiliates or subsidiaries. This is an independent and unofficial API
 
 
-### **Installation**
+## **Installation**
 ``` bash
 # Install composer
 composer install
 
 ```
 
-### **Configuration**
+## **Configuration**
 Rename the ``.env.example`` file to ``.env`` in the root of the api folder
 
 Generate app key
@@ -35,5 +35,33 @@ Insert your restaurant credentials. You can find it in every invoice mail you re
 TAKEAWAY_USERNAME=
 TAKEAWAY_PASSWORD=
 ```
+
+#### **Database**
+
+``` bash
+#Run migrations
+php artisan migrate
+```
+
+## **Task Scheduling**
+This api depends on cron jobs because their restaurant dashboard don't save any orders. Create a new cron entry to run the scraper on a cron job.
+
+``` bash
+crontab -e
+* * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1
+```
+
+####**Schedule Frequency Options**
+You can find the schedules at ``App\Console\Kernel``. Currently it is running everyday between **16:00 - 21:00**, feel free to put your own schedule preference 
+
+``` bash
+$schedule->call(function(){
+    OrdersController::orders();
+})->daily()
+  ->everyMinute()
+  ->timezone('Europe/Amsterdam')
+  ->between('16:00', '21:00');   
+```
+
 
 

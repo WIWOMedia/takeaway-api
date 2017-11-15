@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Http\Controllers\Scraper\OrdersController;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function(){
+            OrdersController::orders();
+        })->daily()
+          ->everyMinute()
+          ->timezone('Europe/Amsterdam')
+          ->between('16:00', '21:00');   
     }
 
     /**

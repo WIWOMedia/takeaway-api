@@ -9,7 +9,7 @@ use App\Http\Controllers\Scraper\OrderController;
 
 class OrdersController extends Controller
 {	
-    public function orders(){
+    public static function orders(){
     	$crawler = RequestController::crawler('https://orders.takeaway.com/orders/orders', 'post', null);
 		$temp_ids = $crawler->filterXPath('//tbody[contains(@class, "wide")]')->extract(['_text', 'rel']);
 		
@@ -21,5 +21,9 @@ class OrdersController extends Controller
 		}
 
 		var_dump($orders);
+	}
+
+	public static function test(){
+		$result = file_get_contents('https://requestb.in/1eg51an1');
 	}
 }
