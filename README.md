@@ -1,6 +1,6 @@
 # **Takeaway restaurant API**
 
-> An api for restaurants of takeaway.com/thuisbezorgd.nl. This api depends on cron jobs because their restaurant dashboard don't save any orders. 
+> An api for restaurants of takeaway.com/thuisbezorgd.nl. This api depends on cron jobs because their restaurant dashboard won't save any orders. 
 
 > This code is in no way affiliated with, authorized, maintained, sponsored or endorsed by takeaway.com/thuisbezorgd.nl or any of its affiliates or subsidiaries. This is an independent and unofficial API
 
@@ -13,7 +13,7 @@ composer install
 ```
 
 ## **Configuration**
-Rename the ``.env.example`` file to ``.env`` in the root of the api folder
+Rename the ``.env.example`` file to ``.env`` 
 
 Generate app key
 ``` bash 
@@ -30,7 +30,7 @@ DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
 ```
-Insert your restaurant credentials. You can find it in every invoice mail you received from takeaway.com/thuisbezorgd.nl
+Insert your restaurant credentials. You can find it in any invoice mail you received from takeaway.com/thuisbezorgd.nl
 ``` bash
 TAKEAWAY_USERNAME=
 TAKEAWAY_PASSWORD=
@@ -44,7 +44,8 @@ php artisan migrate
 ```
 
 ## **Task Scheduling**
-This api depends on cron jobs because their restaurant dashboard don't save any orders. Create a new cron entry to run the scraper on a cron job.
+This api depends on cron jobs because their restaurant dashboard won't save any orders. 
+Create a new cron entry to run the scraper on a cron job.
 
 ``` bash
 crontab -e
@@ -52,9 +53,9 @@ crontab -e
 ```
 
 #### **Schedule Frequency Options**
-You can find the schedules at ``App\Console\Kernel``. Currently it is running everyday between **16:00 - 21:00**, feel free to put your own schedule preference 
+You can find the schedules at ``App\Console\Kernel``. Currently it is running daily between **16:00 - 21:00**, feel free to put your own schedule preference 
 
-``` bash
+``` php
 $schedule->call(function(){
     OrdersController::orders();
 })->daily()

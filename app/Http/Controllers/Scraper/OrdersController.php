@@ -22,8 +22,4 @@ class OrdersController extends Controller
 
 		var_dump($orders);
 	}
-
-	public static function test(){
-		$result = file_get_contents('https://requestb.in/1eg51an1');
-	}
 }
