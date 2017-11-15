@@ -51,7 +51,7 @@ crontab -e
 * * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1
 ```
 
-####**Schedule Frequency Options**
+#### **Schedule Frequency Options**
 You can find the schedules at ``App\Console\Kernel``. Currently it is running everyday between **16:00 - 21:00**, feel free to put your own schedule preference 
 
 ``` bash
