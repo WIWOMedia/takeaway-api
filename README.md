@@ -58,8 +58,7 @@ You can find the schedules at ``App\Console\Kernel``. Currently it is running da
 ``` php
 $schedule->call(function(){
     OrdersController::orders();
-})->daily()
-  ->everyMinute()
+})->everyMinute()
   ->timezone('Europe/Amsterdam')
   ->between('16:00', '21:00');   
 ```
