@@ -18,7 +18,7 @@ class CustomersController extends Controller
             'address' => $customer[1],
             'city' => $customer[3],
             'zip_code' => substr($customer[2], 0, 6),
-            'phone' => $customer[4],
+            'phone' => str_replace(' ', '', $customer[4])
         ];
 
         return $this->_customer_info;

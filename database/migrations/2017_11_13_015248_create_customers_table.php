@@ -17,7 +17,7 @@ class CreateCustomersTable extends Migration
             $table->increments('id');
             $table->uuid('customer_id');
             $table->string('name');
-            $table->integer('phone');
+            $table->string('phone');
             $table->string('zip_code');
             $table->string('city');
             $table->string('address');
