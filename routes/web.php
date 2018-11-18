@@ -9,6 +9,4 @@ Route::get('/', function () {
 });
 
 
-// Route::get('/scraper/orders', 'Scraper\OrdersController@orders');
-
-
+Route::get('/scraper/orders', 'Scraper\OrdersController@orders');
